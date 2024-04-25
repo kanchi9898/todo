@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button"
 
 export default function Home() {
-  const [todo, setTodo] = useState("")
+  const [todo, setTodo] = useState<string | undefined>()
   const [todolist, setTodolist] = useState<string[]>([])
   const [update, setUpdate] = useState(false)
   const [updateid, setUpdateid] = useState(0)
@@ -15,7 +15,7 @@ export default function Home() {
     }
   }, [])
 
-  const handlesubmit = (e: any) => {
+  const handlesubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (todo) {
       const storage = localStorage.getItem("todo")
@@ -55,7 +55,7 @@ export default function Home() {
     }
   }
 
-  const handleupdatefile = (e: any) => {
+  const handleupdatefile = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const storagedata = localStorage.getItem("todo")
     if (storagedata && todo) {
@@ -72,7 +72,7 @@ export default function Home() {
     <main className="border-2 flex flex-col h-[100vh] px-10">
       <h1 className="my-5 text-[5vw]">To Do Task</h1>
       <form onSubmit={update ? handleupdatefile : handlesubmit} className="relative top-5 flex gap-[1vw]">
-        <input value={todo} onChange={(e: any) => setTodo(e.target.value)} type="text" placeholder="To do Task" className="p-2 rounded border-[2px]" />
+        <input value={todo} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTodo(e.target.value)} type="text" placeholder="To do Task" className="p-2 rounded border-[2px]" />
         <Button className="bg-green-500">Add Task</Button>
       </form>
       <div className="mt-10 w-full lg:w-[50%]">
